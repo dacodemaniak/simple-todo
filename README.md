@@ -51,7 +51,7 @@ Put the following in the "scripts" attribute :
     },
 
 # Configure TypeScript
-$ nano tsconfig.js
+$ nano tsconfig.json
 
 Put the following :
 
