@@ -1,0 +1,142 @@
+<!doctype html>
+
+<!-- Balise racine html -->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta 
+            name="viewport"
+            content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
+        >
+
+        <title>Simple Todo</title>
+
+        <link 
+            href="./node_modules/bootstrap/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        >
+        <link href="./assets/css/custom.css" rel="stylesheet">
+
+        <!-- Javascript dependencies -->
+        <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="./assets/javascript/app.js"></script>
+
+    </head>
+
+    <!-- 
+        Element "body" regroupe les éléments visibles
+        dans la fenêtre du navigateur
+    -->
+    <body>
+        <div class="container-fluid">
+            <header>
+                <h1>Simple Todo</h1>
+            </header>
+
+            <main class="row">
+                <!-- Formulaire de saisie des todos -->
+                <form id="todo-form" class="col-xl-5 col-lg-5 col-md-6 col-sm-12 col-12">
+                    <fieldset>
+                        <legend>Ajouter une tâche</legend>
+
+                        <div class="form-group">
+                            <input 
+                                type="text" 
+                                id="todo-content"
+                                placeholder="Titre de la tâche"
+                                name="todo-content"
+                                maxLength="255"
+                                class="form-control"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <input
+                                type="date"
+                                id="todo-begin"
+                                placeholder="Début"
+                                name="todo-begin"
+                                min="2019-07-08"
+                                value="2019-07-08"
+                                class="form-control"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <input
+                                type="date"
+                                id="todo-end"
+                                placeholder="Fin"
+                                name="todo-end"
+                                class="form-control"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Sensibilité :</label>
+                            <select name="todo-sensibility" id="todo-sensibility" size="1" class="form-control">
+                                <option value="0" disabled>Sélectionnez...</option>
+                                <option value="1">Personnelle</option>
+                                <option value="2">Professionnelle</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Détail :</label>
+                            <textarea id="todo-detail" name="todo-detail" rows="5" cols="40" class="form-control">
+                            </textarea>
+                        </div>
+                    </fieldset>
+                    <div>
+                        <button 
+                            id="todo-save" 
+                            class="btn btn-primary" 
+                            disabled
+                        >
+                            Ajouter
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Affichage des todos -->
+                <div class="col-xl-7 col-lg-7 col-md-6 col-sm-12 col-12">
+                    <table class="table table-condensed table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Titre</th>
+                                <th>Début</th>
+                                <th>Fin</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <span id="todos-number">0</span> todos in the list
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </main>
+
+            <footer>
+                <ul class="list-unstyled list-inline">
+                    <li class="list-inline-item">&copy; Aélion 2019</li>
+                    <li class="list-inline-item">Version : 1.0.0</li>
+                    <li class="list-inline-item">
+                        <a href="#" title="Contact">
+                            Contactez-nous
+                        </a>
+                    </li>
+                </ul>
+            </footer>
+        </div>
+    </body>
+</html>
