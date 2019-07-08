@@ -8,11 +8,17 @@ Build web apps from HTML / CSS / TypeScript
 
 # Prepare environment
 $ mkdir ~/javascript-workspace/simple-todo
+
 $ cd ~/javascript-workspace/simple-todo
+
 $ npm init
+
 $ touch .gitignore
+
 $ echo "node_modules" >> .gitignore
+
 $ git init
+
 
 
 
