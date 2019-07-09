@@ -19,6 +19,14 @@ import { TodoListController } from "./todo-list-controller";
     public constructor(localDataService: LocalDataService) {
         this._service = localDataService;
 
+        // Set initial form date
+        $('#todo-begin').val(
+            moment().format('YYYY-MM-DD')
+        ).attr('min', moment().format('YYYY-MM-DD'));
+        $('#todo-end').val(
+            moment().format('YYYY-MM-DD')
+        ).attr('min', moment().format('YYYY-MM-DD'));
+
         this._fields.set(
             $('#todo-content'),
             { tag: 'input', type: 'text'}
@@ -40,6 +48,7 @@ import { TodoListController } from "./todo-list-controller";
             { tag: 'textarea'}
         );
 
+        // 
         // Mettre en place le gestionnaire du formulaire
         this.handler();
     }
@@ -91,8 +100,16 @@ import { TodoListController } from "./todo-list-controller";
                 // Reset le formulaire
                 this._fields.forEach((value, key) => {
                     if (value.tag === 'input') {
-                        // On peut utiliser la méthode val()
-                        key.val('');
+                        if (value.hasOwnProperty('type')) {
+                            if (value.type === 'date') {
+                                key.val(
+                                    moment().format('YYYY-MM-DD')
+                                ).attr('min', moment().format('YYYY-MM-DD'));
+                            } else {
+                               key.val(''); 
+                            }
+                        }
+                        
                     } else if (value.tag === 'select') {
                         // Utiliser une autre stratégie
                         key.val(0);
@@ -101,7 +118,7 @@ import { TodoListController } from "./todo-list-controller";
                     }                    
                 });
                 $('#todo-save').attr('disabled', 'disabled');
-                
+
                 // Appeler la méthode de réinitialisation du tableau
                 const todoListController: TodoListController = new TodoListController(this._service);
             } 

@@ -517,11 +517,15 @@ class TodoFormController {
     constructor(localDataService) {
         this._fields = new Map();
         this._service = localDataService;
+        // Set initial form date
+        jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-begin').val(moment__WEBPACK_IMPORTED_MODULE_1__().format('YYYY-MM-DD')).attr('min', moment__WEBPACK_IMPORTED_MODULE_1__().format('YYYY-MM-DD'));
+        jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-end').val(moment__WEBPACK_IMPORTED_MODULE_1__().format('YYYY-MM-DD')).attr('min', moment__WEBPACK_IMPORTED_MODULE_1__().format('YYYY-MM-DD'));
         this._fields.set(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-content'), { tag: 'input', type: 'text' })
             .set(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-begin'), { tag: 'input', type: 'date' })
             .set(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-end'), { tag: 'input', type: 'date' })
             .set(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-sensibility'), { tag: 'select' })
             .set(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-detail'), { tag: 'textarea' });
+        // 
         // Mettre en place le gestionnaire du formulaire
         this.handler();
     }
@@ -563,8 +567,14 @@ class TodoFormController {
             // Reset le formulaire
             this._fields.forEach((value, key) => {
                 if (value.tag === 'input') {
-                    // On peut utiliser la méthode val()
-                    key.val('');
+                    if (value.hasOwnProperty('type')) {
+                        if (value.type === 'date') {
+                            key.val(moment__WEBPACK_IMPORTED_MODULE_1__().format('YYYY-MM-DD')).attr('min', moment__WEBPACK_IMPORTED_MODULE_1__().format('YYYY-MM-DD'));
+                        }
+                        else {
+                            key.val('');
+                        }
+                    }
                 }
                 else if (value.tag === 'select') {
                     // Utiliser une autre stratégie
