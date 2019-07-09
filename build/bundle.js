@@ -574,6 +574,7 @@ class TodoFormController {
                     key.val('');
                 }
             });
+            jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-save').attr('disabled', 'disabled');
             // Appeler la méthode de réinitialisation du tableau
             const todoListController = new _todo_list_controller__WEBPACK_IMPORTED_MODULE_3__["TodoListController"](this._service);
         });

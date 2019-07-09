@@ -100,7 +100,8 @@ import { TodoListController } from "./todo-list-controller";
                         key.val('');
                     }                    
                 });
-
+                $('#todo-save').attr('disabled', 'disabled');
+                
                 // Appeler la méthode de réinitialisation du tableau
                 const todoListController: TodoListController = new TodoListController(this._service);
             } 
