@@ -31,6 +31,14 @@ export class TodoModel {
     public get begin(): Date {
         return this._begin;
     }
+
+    public getBeginDate(): string {
+        return moment(this._begin).format('DD/MM/YYYY');
+    }
+
+    public getEndDate(): string {
+        return moment(this._end).format('DD/MM/YYYY');
+    }
     public set begin(value: Date) {
         this._begin = value;
     }
@@ -59,5 +67,9 @@ export class TodoModel {
     public deserialize(data: any): TodoModel {
         Object.assign(this, data);
         return this;
+    }
+
+    public serialize(): string {
+        return JSON.stringify(this);
     }
 }

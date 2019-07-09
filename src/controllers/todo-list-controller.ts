@@ -12,6 +12,9 @@ export class TodoListController {
     public constructor(localDataService: LocalDataService) {
         this._service = localDataService;
 
+        // Eventually clear tbody
+        $('tbody tr').remove();
+        
         // Invoke private method
         this._setTodosNumber();
         this._hydrateTable();
@@ -33,12 +36,10 @@ export class TodoListController {
             const tbody: JQuery = $('tbody');
 
             todos.forEach((data: any) => {
-                
+                // Deserialization to get a well formed todo
                 let todo: TodoModel = new TodoModel().deserialize(data);
 
                 let _row: JQuery = $('<tr>'); // Instance d'un TR dans le DOM
-
-                console.log('ID : ', todo.title);
 
                 let _idTD: JQuery = $('<td>'); // Instance d'un TD dans le DOM
                 _idTD.html(todo.id.toString());
@@ -47,8 +48,8 @@ export class TodoListController {
                 let _titleTD: JQuery = $('<td>');
                 _titleTD.html(todo.title).appendTo(_row);
 
-                $('<td>').html(todo.begin.toString()).appendTo(_row);
-                $('<td>').html(todo.end.toString()).appendTo(_row);
+                $('<td>').html(todo.getBeginDate()).appendTo(_row);
+                $('<td>').html(todo.getEndDate()).appendTo(_row);
                 $('<td>').html('').appendTo(_row);
 
                 // Add row to HTML content
