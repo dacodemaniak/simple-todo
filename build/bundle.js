@@ -167,20 +167,187 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "App", function() { return App; });
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_local_data_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/local-data-service */ "./src/services/local-data-service.ts");
+/* harmony import */ var _controllers_todo_list_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./controllers/todo-list-controller */ "./src/controllers/todo-list-controller.ts");
 /**
  * @name App
  * @abstract Point d'entrée dans l'application
  */
 
+
+
 class App {
     run() {
         console.log('Hello TypeScript');
+        /* Persister un todo
+        const todo: TodoModel = new TodoModel();
+        todo.title = 'Test';
+        todo.begin = new Date();
+        todo.end = new Date();
+        todo.sensibility = 0;
+        todo.detail = 'Description du todo';*/
+        const service = new _services_local_data_service__WEBPACK_IMPORTED_MODULE_1__["LocalDataService"]();
+        // Instancier le contrôleur de la liste des todos
+        const todoListController = new _controllers_todo_list_controller__WEBPACK_IMPORTED_MODULE_2__["TodoListController"](service);
     }
 }
 jquery__WEBPACK_IMPORTED_MODULE_0__(document).ready(() => {
     const app = new App();
     app.run();
 });
+
+
+/***/ }),
+
+/***/ "./src/controllers/todo-list-controller.ts":
+/*!*************************************************!*\
+  !*** ./src/controllers/todo-list-controller.ts ***!
+  \*************************************************/
+/*! exports provided: TodoListController */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TodoListController", function() { return TodoListController; });
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _models_todo_model__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../models/todo-model */ "./src/models/todo-model.ts");
+
+
+/**
+ * @name TodoListController
+ * @abstract Gère l'affichage de la liste des todos
+ */
+class TodoListController {
+    constructor(localDataService) {
+        this._service = localDataService;
+        // Invoke private method
+        this._setTodosNumber();
+        this._hydrateTable();
+    }
+    _setTodosNumber() {
+        const placeholder = jquery__WEBPACK_IMPORTED_MODULE_0__('#todos-number');
+        placeholder.html(this._service.getSize().toString());
+    }
+    _hydrateTable() {
+        const todos = this._service.get();
+        console.log('Todos : ', JSON.stringify(todos));
+        if (this._service.getSize() > 0) {
+            // Récupérer l'instance de "tbody" du DOM
+            const tbody = jquery__WEBPACK_IMPORTED_MODULE_0__('tbody');
+            todos.forEach((data) => {
+                let todo = new _models_todo_model__WEBPACK_IMPORTED_MODULE_1__["TodoModel"]().deserialize(data);
+                let _row = jquery__WEBPACK_IMPORTED_MODULE_0__('<tr>'); // Instance d'un TR dans le DOM
+                console.log('ID : ', todo.title);
+                let _idTD = jquery__WEBPACK_IMPORTED_MODULE_0__('<td>'); // Instance d'un TD dans le DOM
+                _idTD.html(todo.id.toString());
+                _idTD.appendTo(_row); // Ajoute le noeud TD enfant dans le TR
+                let _titleTD = jquery__WEBPACK_IMPORTED_MODULE_0__('<td>');
+                _titleTD.html(todo.title).appendTo(_row);
+                jquery__WEBPACK_IMPORTED_MODULE_0__('<td>').html(todo.begin.toString()).appendTo(_row);
+                jquery__WEBPACK_IMPORTED_MODULE_0__('<td>').html(todo.end.toString()).appendTo(_row);
+                jquery__WEBPACK_IMPORTED_MODULE_0__('<td>').html('').appendTo(_row);
+                // Add row to HTML content
+                tbody.append(_row);
+            });
+        }
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/models/todo-model.ts":
+/*!**********************************!*\
+  !*** ./src/models/todo-model.ts ***!
+  \**********************************/
+/*! exports provided: TodoModel */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TodoModel", function() { return TodoModel; });
+/**
+ * @name TodoModel
+ * @abstract Modèle des Todos de l'application
+ */
+class TodoModel {
+    get id() {
+        return this._id;
+    }
+    set id(id) {
+        this._id = id;
+    }
+    get title() {
+        return this._title;
+    }
+    set title(title) {
+        this._title = title;
+    }
+    get begin() {
+        return this._begin;
+    }
+    set begin(value) {
+        this._begin = value;
+    }
+    get end() {
+        return this._end;
+    }
+    set end(value) {
+        this._end = value;
+    }
+    get sensibility() {
+        return this._sensibility;
+    }
+    set sensibility(value) {
+        this._sensibility = value;
+    }
+    get detail() {
+        return this._detail;
+    }
+    set detail(value) {
+        this._detail = value;
+    }
+    deserialize(data) {
+        Object.assign(this, data);
+        return this;
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/services/local-data-service.ts":
+/*!********************************************!*\
+  !*** ./src/services/local-data-service.ts ***!
+  \********************************************/
+/*! exports provided: LocalDataService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LocalDataService", function() { return LocalDataService; });
+/**
+ * @name LocalDataService
+ * @abstract Service de presistance locale LocalStorage
+ */
+class LocalDataService {
+    get() {
+        if (localStorage.getItem('todos')) {
+            const todos = JSON.parse(localStorage.getItem('todos'));
+            return todos;
+        }
+    }
+    set(todos) {
+        localStorage.setItem('todos', JSON.stringify(todos));
+    }
+    getSize() {
+        if (localStorage.getItem('todos')) {
+            return JSON.parse(localStorage.getItem('todos')).length;
+        }
+        return 0;
+    }
+}
 
 
 /***/ })
