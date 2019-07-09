@@ -34,6 +34,10 @@ import { TodoListController } from "./todo-list-controller";
         .set(
             $('#todo-sensibility'),
             { tag: 'select'}
+        )
+        .set(
+            $('#todo-detail'),
+            { tag: 'textarea'}
         );
 
         // Mettre en place le gestionnaire du formulaire
@@ -60,8 +64,7 @@ import { TodoListController } from "./todo-list-controller";
                         }
                     } else if (value.tag === 'textarea') {
                         // On va devoir utiliser la méthode html()
-                        if (key.html().toString().trim() === '') {
-                            console.log(key.html(), ' est invalide !');
+                        if (key.val().toString().trim() === '') {
                             isFormValid = false;
                         }
                     }
@@ -77,7 +80,7 @@ import { TodoListController } from "./todo-list-controller";
                 event.preventDefault(); // Empêche la soumission du formulaire
                 const newTodo: TodoModel = new TodoModel();
                 
-                newTodo.id = 2;
+                newTodo.id = this._service.getSize() + 1;
                 newTodo.title = ($('#todo-content').val().toString());
                 newTodo.begin = (moment($('#todo-begin').val()).toDate());
                 newTodo.end = (moment($('#todo-end').val()).toDate());

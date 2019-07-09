@@ -520,7 +520,8 @@ class TodoFormController {
         this._fields.set(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-content'), { tag: 'input', type: 'text' })
             .set(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-begin'), { tag: 'input', type: 'date' })
             .set(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-end'), { tag: 'input', type: 'date' })
-            .set(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-sensibility'), { tag: 'select' });
+            .set(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-sensibility'), { tag: 'select' })
+            .set(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-detail'), { tag: 'textarea' });
         // Mettre en place le gestionnaire du formulaire
         this.handler();
     }
@@ -542,8 +543,7 @@ class TodoFormController {
                 }
                 else if (value.tag === 'textarea') {
                     // On va devoir utiliser la méthode html()
-                    if (key.html().toString().trim() === '') {
-                        console.log(key.html(), ' est invalide !');
+                    if (key.val().toString().trim() === '') {
                         isFormValid = false;
                     }
                 }
@@ -554,7 +554,7 @@ class TodoFormController {
         jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-form').on('submit', (event) => {
             event.preventDefault(); // Empêche la soumission du formulaire
             const newTodo = new _models_todo_model__WEBPACK_IMPORTED_MODULE_2__["TodoModel"]();
-            newTodo.id = 2;
+            newTodo.id = this._service.getSize() + 1;
             newTodo.title = (jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-content').val().toString());
             newTodo.begin = (moment__WEBPACK_IMPORTED_MODULE_1__(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-begin').val()).toDate());
             newTodo.end = (moment__WEBPACK_IMPORTED_MODULE_1__(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-end').val()).toDate());
@@ -706,9 +706,6 @@ class TodoModel {
     deserialize(data) {
         Object.assign(this, data);
         return this;
-    }
-    serialize() {
-        return JSON.stringify(this);
     }
 }
 

@@ -68,8 +68,4 @@ export class TodoModel {
         Object.assign(this, data);
         return this;
     }
-
-    public serialize(): string {
-        return JSON.stringify(this);
-    }
 }
