@@ -1,4 +1,5 @@
 import { TodoModel } from "./../models/todo-model";
+import * as $ from 'jquery';
 
 /**
  * @name LocalDataService
@@ -8,8 +9,15 @@ export class LocalDataService {
     public get(): Array<TodoModel> {
         if (localStorage.getItem('todos')) {
             const todos: Array<TodoModel> = JSON.parse(localStorage.getItem('todos'));
+            setTimeout(() => {
+                    $('.outer-loader').addClass('disabled');
+                },
+                1000
+            );
+            
             return todos;
         }
+        $('.outer-loader').addClass('disabled');
     }
 
     public set(todos: Array<TodoModel>): void {

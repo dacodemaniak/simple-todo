@@ -98,6 +98,13 @@ import { TodoListController } from "./todo-list-controller";
 
                 this._service.add(newTodo);
 
+                // Montrer le toast et... le cacher après n secondes
+                $('.toaster').removeClass('disabled');
+                setTimeout(
+                    () => { $('.toaster').addClass('disabled')}, 
+                    2000
+                );
+
                 // Reset le formulaire
                 this._fields.forEach((value, key) => {
                     if (value.tag === 'input') {

@@ -558,6 +558,9 @@ class TodoFormController {
             newTodo.sensibility = parseInt(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-sensibility').val().toString());
             newTodo.detail = jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-detail').val().toString();
             this._service.add(newTodo);
+            // Montrer le toast et... le cacher après n secondes
+            jquery__WEBPACK_IMPORTED_MODULE_0__('.toaster').removeClass('disabled');
+            setTimeout(() => { jquery__WEBPACK_IMPORTED_MODULE_0__('.toaster').addClass('disabled'); }, 2000);
             // Reset le formulaire
             this._fields.forEach((value, key) => {
                 if (value.tag === 'input') {
@@ -728,6 +731,9 @@ class TodoModel {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LocalDataService", function() { return LocalDataService; });
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+
 /**
  * @name LocalDataService
  * @abstract Service de presistance locale LocalStorage
@@ -736,8 +742,12 @@ class LocalDataService {
     get() {
         if (localStorage.getItem('todos')) {
             const todos = JSON.parse(localStorage.getItem('todos'));
+            setTimeout(() => {
+                jquery__WEBPACK_IMPORTED_MODULE_0__('.outer-loader').addClass('disabled');
+            }, 1000);
             return todos;
         }
+        jquery__WEBPACK_IMPORTED_MODULE_0__('.outer-loader').addClass('disabled');
     }
     set(todos) {
         localStorage.setItem('todos', JSON.stringify(todos));
