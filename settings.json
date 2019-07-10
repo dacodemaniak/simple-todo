@@ -1,0 +1,8 @@
+{    
+    "less.compile": {
+        "main": "./src/less/main.less",
+       "compress":  true, 
+       "sourceMap": true,
+       "out": "./assets/css/custom.css"
+    }
+}
