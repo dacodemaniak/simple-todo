@@ -10,7 +10,7 @@ div {
         height: 75px;
         width: 300px;
         /** Centrage horizontal **/
-        left: 50%;
+        left: unit((@defWidth/2)-150, px);
         transition: all 0.8s 0s ease-out;
 
         &:hover {
@@ -21,6 +21,7 @@ div {
         &.disabled {
             display: none;
         }
+
         div {
             &.bar {
                 padding-top: 0.25em;
