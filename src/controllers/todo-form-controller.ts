@@ -99,10 +99,14 @@ import { TodoListController } from "./todo-list-controller";
                 this._service.add(newTodo);
 
                 // Montrer le toast et... le cacher après n secondes
-                $('.toaster').removeClass('disabled');
+                $('.toaster .bar .title').html('').html('Nouveau todo');
+                $('.toaster .content').html('').html(
+                    `<strong>${$('#todo-content').val().toString()}</strong><br>a été ajouté avec succès.`
+                );
+                $('.outer-toaster').removeClass('disabled');
                 setTimeout(
-                    () => { $('.toaster').addClass('disabled')}, 
-                    2000
+                    () => { $('.outer-toaster').addClass('disabled')}, 
+                    3000
                 );
 
                 // Reset le formulaire
