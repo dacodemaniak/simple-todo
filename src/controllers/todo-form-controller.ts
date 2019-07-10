@@ -94,6 +94,7 @@ import { TodoListController } from "./todo-list-controller";
                 newTodo.begin = (moment($('#todo-begin').val()).toDate());
                 newTodo.end = (moment($('#todo-end').val()).toDate());
                 newTodo.sensibility = parseInt($('#todo-sensibility').val().toString());
+                newTodo.detail = $('#todo-detail').val().toString();
 
                 this._service.add(newTodo);
 
@@ -109,7 +110,6 @@ import { TodoListController } from "./todo-list-controller";
                                key.val(''); 
                             }
                         }
-                        
                     } else if (value.tag === 'select') {
                         // Utiliser une autre stratégie
                         key.val(0);
@@ -117,6 +117,7 @@ import { TodoListController } from "./todo-list-controller";
                         key.val('');
                     }                    
                 });
+                // Désactivation du bouton submit
                 $('#todo-save').attr('disabled', 'disabled');
 
                 // Appeler la méthode de réinitialisation du tableau

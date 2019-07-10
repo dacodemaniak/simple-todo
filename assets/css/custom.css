@@ -1,3 +1,7 @@
+footer ul {
+    text-align: center;
+}
+
 footer ul li:last-child {
     border-right: none;
 }

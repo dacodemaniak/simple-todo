@@ -467,13 +467,6 @@ __webpack_require__.r(__webpack_exports__);
 class App {
     run() {
         console.log('Hello TypeScript');
-        /* Persister un todo
-        const todo: TodoModel = new TodoModel();
-        todo.title = 'Test';
-        todo.begin = new Date();
-        todo.end = new Date();
-        todo.sensibility = 0;
-        todo.detail = 'Description du todo';*/
         const service = new _services_local_data_service__WEBPACK_IMPORTED_MODULE_1__["LocalDataService"]();
         // Instancier le contrôleur de la liste des todos
         const todoListController = new _controllers_todo_list_controller__WEBPACK_IMPORTED_MODULE_2__["TodoListController"](service);
@@ -563,6 +556,7 @@ class TodoFormController {
             newTodo.begin = (moment__WEBPACK_IMPORTED_MODULE_1__(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-begin').val()).toDate());
             newTodo.end = (moment__WEBPACK_IMPORTED_MODULE_1__(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-end').val()).toDate());
             newTodo.sensibility = parseInt(jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-sensibility').val().toString());
+            newTodo.detail = jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-detail').val().toString();
             this._service.add(newTodo);
             // Reset le formulaire
             this._fields.forEach((value, key) => {
@@ -584,6 +578,7 @@ class TodoFormController {
                     key.val('');
                 }
             });
+            // Désactivation du bouton submit
             jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-save').attr('disabled', 'disabled');
             // Appeler la méthode de réinitialisation du tableau
             const todoListController = new _todo_list_controller__WEBPACK_IMPORTED_MODULE_3__["TodoListController"](this._service);

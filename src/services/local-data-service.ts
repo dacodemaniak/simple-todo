@@ -25,10 +25,13 @@ export class LocalDataService {
 
     public add(todo: TodoModel) {
         let todos: Array<any> = this.get();
+
         if (!todos) {
             todos = Array<any>();
         }
+
         todos.push(todo);
+
         this.set(todos);
     }
 }
