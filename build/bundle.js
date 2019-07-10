@@ -627,27 +627,30 @@ class TodoListController {
         placeholder.html(this._service.getSize().toString());
     }
     _hydrateTable() {
-        const todos = this._service.get();
-        console.log('Todos : ', JSON.stringify(todos));
-        if (this._service.getSize() > 0) {
-            // Récupérer l'instance de "tbody" du DOM
-            const tbody = jquery__WEBPACK_IMPORTED_MODULE_0__('tbody');
-            todos.forEach((data) => {
-                // Deserialization to get a well formed todo
-                let todo = new _models_todo_model__WEBPACK_IMPORTED_MODULE_1__["TodoModel"]().deserialize(data);
-                let _row = jquery__WEBPACK_IMPORTED_MODULE_0__('<tr>'); // Instance d'un TR dans le DOM
-                let _idTD = jquery__WEBPACK_IMPORTED_MODULE_0__('<td>'); // Instance d'un TD dans le DOM
-                _idTD.html(todo.id.toString());
-                _idTD.appendTo(_row); // Ajoute le noeud TD enfant dans le TR
-                let _titleTD = jquery__WEBPACK_IMPORTED_MODULE_0__('<td>');
-                _titleTD.html(todo.title).appendTo(_row);
-                jquery__WEBPACK_IMPORTED_MODULE_0__('<td>').html(todo.getBeginDate()).appendTo(_row);
-                jquery__WEBPACK_IMPORTED_MODULE_0__('<td>').html(todo.getEndDate()).appendTo(_row);
-                jquery__WEBPACK_IMPORTED_MODULE_0__('<td>').html('').appendTo(_row);
-                // Add row to HTML content
-                tbody.append(_row);
-            });
-        }
+        this._service.get().then((todos) => {
+            console.log('Promesse tenue');
+            jquery__WEBPACK_IMPORTED_MODULE_0__('.outer-loader').addClass('disabled');
+            if (todos) {
+                // Récupérer l'instance de "tbody" du DOM
+                const tbody = jquery__WEBPACK_IMPORTED_MODULE_0__('tbody');
+                todos.forEach((data) => {
+                    // Deserialization to get a well formed todo
+                    let todo = new _models_todo_model__WEBPACK_IMPORTED_MODULE_1__["TodoModel"]().deserialize(data);
+                    let _row = jquery__WEBPACK_IMPORTED_MODULE_0__('<tr>'); // Instance d'un TR dans le DOM
+                    let _idTD = jquery__WEBPACK_IMPORTED_MODULE_0__('<td>'); // Instance d'un TD dans le DOM
+                    _idTD.html(todo.id.toString());
+                    _idTD.appendTo(_row); // Ajoute le noeud TD enfant dans le TR
+                    let _titleTD = jquery__WEBPACK_IMPORTED_MODULE_0__('<td>');
+                    _titleTD.html(todo.title).appendTo(_row);
+                    jquery__WEBPACK_IMPORTED_MODULE_0__('<td>').html(todo.getBeginDate()).appendTo(_row);
+                    jquery__WEBPACK_IMPORTED_MODULE_0__('<td>').html(todo.getEndDate()).appendTo(_row);
+                    jquery__WEBPACK_IMPORTED_MODULE_0__('<td>').html('').appendTo(_row);
+                    // Add row to HTML content
+                    tbody.append(_row);
+                });
+            }
+        });
+        console.log('Je continue le job...');
     }
 }
 
@@ -733,23 +736,22 @@ class TodoModel {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LocalDataService", function() { return LocalDataService; });
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-
 /**
  * @name LocalDataService
  * @abstract Service de presistance locale LocalStorage
  */
 class LocalDataService {
     get() {
-        if (localStorage.getItem('todos')) {
-            const todos = JSON.parse(localStorage.getItem('todos'));
-            setTimeout(() => {
-                jquery__WEBPACK_IMPORTED_MODULE_0__('.outer-loader').addClass('disabled');
-            }, 1000);
-            return todos;
-        }
-        jquery__WEBPACK_IMPORTED_MODULE_0__('.outer-loader').addClass('disabled');
+        return new Promise((resolve, reject) => {
+            if (localStorage.getItem('todos')) {
+                const todos = JSON.parse(localStorage.getItem('todos'));
+                setTimeout(() => {
+                    resolve(todos);
+                }, 1500);
+                return;
+            }
+            resolve(null);
+        });
     }
     set(todos) {
         localStorage.setItem('todos', JSON.stringify(todos));

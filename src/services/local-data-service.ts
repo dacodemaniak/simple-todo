@@ -6,18 +6,18 @@ import * as $ from 'jquery';
  * @abstract Service de presistance locale LocalStorage
  */
 export class LocalDataService {
-    public get(): Array<TodoModel> {
-        if (localStorage.getItem('todos')) {
-            const todos: Array<TodoModel> = JSON.parse(localStorage.getItem('todos'));
-            setTimeout(() => {
-                    $('.outer-loader').addClass('disabled');
-                },
-                1000
-            );
-            
-            return todos;
-        }
-        $('.outer-loader').addClass('disabled');
+
+    public get(): Promise<Array<TodoModel>> {
+        return new Promise((resolve, reject) => {
+            if (localStorage.getItem('todos')) {
+                const todos: Array<TodoModel> = JSON.parse(localStorage.getItem('todos'));
+                setTimeout(() => {
+                    resolve(todos);
+                }, 1500);
+                return;
+            }
+            resolve(null);
+        });
     }
 
     public set(todos: Array<TodoModel>): void {
