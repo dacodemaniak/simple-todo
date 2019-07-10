@@ -103,9 +103,9 @@ import { TodoListController } from "./todo-list-controller";
                 $('.toaster .content').html('').html(
                     `<strong>${$('#todo-content').val().toString()}</strong><br>a été ajouté avec succès.`
                 );
-                $('.outer-toaster').removeClass('disabled');
+                $('.toaster').removeClass('disabled');
                 setTimeout(
-                    () => { $('.outer-toaster').addClass('disabled')}, 
+                    () => { $('.toaster').addClass('disabled')}, 
                     3000
                 );
 

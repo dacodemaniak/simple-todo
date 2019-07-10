@@ -561,8 +561,8 @@ class TodoFormController {
             // Montrer le toast et... le cacher après n secondes
             jquery__WEBPACK_IMPORTED_MODULE_0__('.toaster .bar .title').html('').html('Nouveau todo');
             jquery__WEBPACK_IMPORTED_MODULE_0__('.toaster .content').html('').html(`<strong>${jquery__WEBPACK_IMPORTED_MODULE_0__('#todo-content').val().toString()}</strong><br>a été ajouté avec succès.`);
-            jquery__WEBPACK_IMPORTED_MODULE_0__('.outer-toaster').removeClass('disabled');
-            setTimeout(() => { jquery__WEBPACK_IMPORTED_MODULE_0__('.outer-toaster').addClass('disabled'); }, 3000);
+            jquery__WEBPACK_IMPORTED_MODULE_0__('.toaster').removeClass('disabled');
+            setTimeout(() => { jquery__WEBPACK_IMPORTED_MODULE_0__('.toaster').addClass('disabled'); }, 3000);
             // Reset le formulaire
             this._fields.forEach((value, key) => {
                 if (value.tag === 'input') {

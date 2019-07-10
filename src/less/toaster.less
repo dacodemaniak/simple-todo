@@ -1,0 +1,38 @@
+// main: ./main.less
+
+div {
+    &.toaster {
+        .vertical-centered(absolute);
+        background-color: @success;
+        box-shadow: none;
+        color: #fff;
+        border-radius: 3px;
+        height: 75px;
+        width: 300px;
+        /** Centrage horizontal **/
+        left: 50%;
+        transition: all 0.8s 0s ease-out;
+
+        &:hover {
+            background-color: darken(@success, 20%);
+            box-shadow: 3px 3px 3px #000;
+        }
+
+        &.disabled {
+            display: none;
+        }
+        div {
+            &.bar {
+                padding-top: 0.25em;
+
+                div {
+                    &.title {
+                        padding-left: 20px;
+                        font-weight: bold;
+                        text-shadow: 1px 1px 1px #000;
+                    }
+                }
+            }
+        }
+    }
+}
